@@ -4,8 +4,8 @@ Welcome to the official GitHub repository for the research paper:
 
 _"OVNS: Opportunistic Variable Neighborhood Search for Heaviest Subgraph Problem in Social Networks"_ by Ville P. Saarinen, Ted Hsuan Yun Chen, Mikko Kivelä.
 
-## Abstract
-We propose a hybrid heuristic algorithm for solving the Heaviest k-Subgraph Problem in online social networks – a combinatorial graph optimization problem central to many important applications in weighted social networks, including detection of coordinated behavior, maximizing diversity of a group of users, and detecting social groups. Our approach builds upon an existing metaheuristic framework known as Variable Neighborhood Search and takes advantage of empirical insights about social network structures to derive an improved optimization heuristic. We conduct benchmarks in both real life social networks as well as synthetic networks and demonstrate that the proposed modifications match and in the majority of cases supersede those of the current state-of-the-art approaches.
+## Outline
+A hybrid heuristic algorithm for solving the Heaviest k-Subgraph Problem in online social networks with state-of-the-art performance.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -19,7 +19,7 @@ We propose a hybrid heuristic algorithm for solving the Heaviest k-Subgraph Prob
 
 ## Getting Started
 
-This repository contains the code base for the implementation of the OVNS algorithm, an effective heuristic for solving the Heaviest k-Subgraph Problem in social networks.
+This repository contains the code base for the python implementation of the OVNS algorithm, a state-of-the-art performant heuristic for solving the Heaviest k-Subgraph Problem in social networks.
 
 ### Prerequisites
 
@@ -50,9 +50,9 @@ After installation, you can run the OVNS algorithm on your own social network da
 import ovns
 import numpy as np
 
-N = 1000
+N = 1000                               # Number of nodes in the network 
 rng = np.random.default_rng()
-A = rng.standard_exponential((N,N))    # Adjacency matrix
+A = rng.standard_exponential((N, N))   # Random adjacency matrix carrying the weight information
 k = 20                                 # Target number of subgraphs
 
 result = OVNS(A, k)
