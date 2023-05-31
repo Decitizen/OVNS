@@ -53,7 +53,7 @@ import numpy as np
 N = 1000                               # Number of nodes in the network 
 rng = np.random.default_rng()
 A = rng.standard_exponential((N, N))   # Random adjacency matrix carrying the weight information
-k = 20                                 # Target number of subgraphs
+k = 20                                 # Size of the targeted subgraph
 
 result = OVNS(A, k)
 
