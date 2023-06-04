@@ -58,7 +58,7 @@ result = OVNS(A, k)
 
 ## Results and Benchmarks
 
-We have conducted benchmarks in both real-life social networks as well as synthetic networks. Please refer to our paper for a comprehensive explanation and discussion of these results.
+We have conducted benchmarks in both real-life social networks as well as synthetic networks. Please see our paper https://arxiv.org/abs/2305.19729 for a comprehensive explanation and discussion of these results.
 
 ## Contributing
 
