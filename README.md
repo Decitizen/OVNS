@@ -1,11 +1,8 @@
 # OVNS: Opportunistic Variable Neighborhood Search for Heaviest Subgraph Problem in Social Networks
 
-Welcome to the official GitHub repository for the research paper: 
+Welcome to the official GitHub repository for the [research paper (arxiv)](https://arxiv.org/abs/2305.19729): 
 
 _"OVNS: Opportunistic Variable Neighborhood Search for Heaviest Subgraph Problem in Social Networks"_ by Ville P. Saarinen, Ted Hsuan Yun Chen, Mikko Kivelä.
-
-## Outline
-A hybrid heuristic algorithm for solving the Heaviest k-Subgraph Problem in online social networks with state-of-the-art performance.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -19,7 +16,7 @@ A hybrid heuristic algorithm for solving the Heaviest k-Subgraph Problem in onli
 
 ## Getting Started
 
-This repository contains the code base for the python implementation of the OVNS algorithm, a state-of-the-art performant heuristic for solving the Heaviest k-Subgraph Problem in social networks.
+This repository contains the code base for the python implementation of the OVNS algorithm, a state-of-the-art performant heuristic for solving the Heaviest k-Subgraph Problem in social networks. 
 
 ### Prerequisites
 
