@@ -1,5 +1,7 @@
 # OVNS: Opportunistic Variable Neighborhood Search
 
+![](ovns_operating_principles.png)
+
 Welcome to the official GitHub repository of Opportunistic Variable Neighborhood Search (OVNS).
 This repository contains the code base for the python implementation of the OVNS algorithm, a state-of-the-art (6/2023) performant heuristic for solving the *Heaviest k-Subgraph Problem* (HSP) in social networks. Among the key features of OVNS is its ability to employ stratified sampling to exploit heavy-tailed degree distributions typical to large social networks.
 
