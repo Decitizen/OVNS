@@ -306,7 +306,7 @@ try:
         xmin, xmax = ax.get_xlim()
 
         if double_xaxis:
-            iter_rate = result['iterations'] / result['running_time']
+            iter_rate = res['iterations'] / res['running_time']
             iter2time = lambda x: x*iter_rate**-1 / 3600
             time2iter = lambda x: 3600*x*iter_rate
             ax2 = ax.secondary_xaxis('top', functions=(iter2time, time2iter))
