@@ -231,85 +231,91 @@ def compute_random_reference(A, result, n_draws=1000, seed=None):
 
     return Hws.mean()
 
-def plot_convergence(res, A=None, save=None,
+try:
+    import matplotlib.pyplot as plt
+
+    def plot_convergence(res, A=None, save=None,
                      title='Convergence',
                      include_initialization=True,
                      double_xaxis=True,
                      ax=None,
                      relative=True,
                      **kwargs):
-    """
-    Generate a convergence plot to visualize OVNS convergence diagnostics.
+        """
+        Generate a convergence plot to visualize OVNS convergence diagnostics.
 
-    Parameters:
-        res (dict): Output from OVNS.
-            - 'run_trace': A list of tuples (Y, X) representing the convergence trace.
-            - 'iterations': Total number of iterations.
-            - 'running_time': Total running time in seconds.
-        A (np.array of shape (n,n), optional): OVNS input network as adjacency matrix.
-                                               Defaults to None.
-        save (str, optional): The path to save the plot image file. Defaults to None.
+        Parameters:
+            res (dict): Output from OVNS.
+                - 'run_trace': A list of tuples (Y, X) representing the convergence trace.
+                - 'iterations': Total number of iterations.
+                - 'running_time': Total running time in seconds.
+            A (np.array of shape (n,n), optional): OVNS input network as adjacency matrix.
+                                                Defaults to None.
+            save (str, optional): The path to save the plot image file. Defaults to None.
 
-        title (str, optional): The title of the plot. Defaults to 'Convergence'.
+            title (str, optional): The title of the plot. Defaults to 'Convergence'.
 
-        include_initialization (bool, optional): Whether to include the initialization
-            point in the plot. If True, then A is expected to be passed for computing the
-        random initial solution as reference. Defaults to True.
+            include_initialization (bool, optional): Whether to include the initialization
+                point in the plot. If True, then A is expected to be passed for computing the
+            random initial solution as reference. Defaults to True.
 
-        double_xaxis (bool, optional): Whether to include a secondary x-axis to display
-            running time in hours. Defaults to True.
+            double_xaxis (bool, optional): Whether to include a secondary x-axis to display
+                running time in hours. Defaults to True.
 
-        ax (matplotlib.axes.Axes, optional): The matplotlib axes to plot on.
-            If not provided, a new figure and axes will be created. Defaults to None.
+            ax (matplotlib.axes.Axes, optional): The matplotlib axes to plot on.
+                If not provided, a new figure and axes will be created. Defaults to None.
 
-        relative (bool, optional): Whether to plot the fraction of relative improvement
-            or the objective function value. Defaults to True.
+            relative (bool, optional): Whether to plot the fraction of relative improvement
+                or the objective function value. Defaults to True.
 
-        **kwargs: Additional keyword arguments to be passed to the plot function calls.
+            **kwargs: Additional keyword arguments to be passed to the plot function calls.
 
-    Returns:
-        None (displays the plot or saves it to a file).
-    """
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(5, 4.5))
+        Returns:
+            None (displays the plot or saves it to a file).
+        """
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(5, 4.5))
 
-    ax.set_title(title, y=1.15)
+        ax.set_title(title, y=1.15)
 
-    if include_initialization:
-        assert type(E_input) is np.ndarray, 'Pass adjacency matrix A as numpy array'
-        Y0 = compute_random_reference(A, res)
+        if include_initialization:
+            assert type(E_input) is np.ndarray, 'Pass adjacency matrix A as numpy array'
+            Y0 = compute_random_reference(A, res)
 
-    Y, X = zip(*res['run_trace'])
-    X = list(X) + [res['iterations']]
+        Y, X = zip(*res['run_trace'])
+        X = list(X) + [res['iterations']]
 
-    ymin = np.min(Y)
-    ymax = np.max(Y)
-    if include_initialization:
-        Y_init = np.array([Y0] + list(Y))
-        Y_init = (Y_init - Y0) / (ymax - Y0) if relative else Y_init
-        ax.plot(np.array(X), Y_init, '.-.', alpha=1.0, label='including $H_0$', **kwargs)
-        ax.plot([X[0],X[-1]],[0]*2 if relative else [Y0]*2,'-.',alpha=.5, lw=0.5,
-            color='#111', label='random baseline')
+        ymin = np.min(Y)
+        ymax = np.max(Y)
+        if include_initialization:
+            Y_init = np.array([Y0] + list(Y))
+            Y_init = (Y_init - Y0) / (ymax - Y0) if relative else Y_init
+            ax.plot(np.array(X), Y_init, '.-.', alpha=1.0, label='including $H_0$', **kwargs)
+            ax.plot([X[0],X[-1]],[0]*2 if relative else [Y0]*2,'-.',alpha=.5, lw=0.5,
+                color='#111', label='random baseline')
 
-    Y_opt = np.array([np.nan] + list(Y))
-    Y_opt = (Y_opt - ymin) / (ymax - ymin) if relative else Y_opt
-    ax.plot(np.array(X), Y_opt, '.-', alpha=1.0, label='excluding $H_0$', **kwargs)
+        Y_opt = np.array([np.nan] + list(Y))
+        Y_opt = (Y_opt - ymin) / (ymax - ymin) if relative else Y_opt
+        ax.plot(np.array(X), Y_opt, '.-', alpha=1.0, label='excluding $H_0$', **kwargs)
 
-    ax.set_xlabel('Number of iterations')
-    ylabel = 'Fraction of relative improvement $I$' if relative else 'Objective function value'
-    ax.set_ylabel(ylabel)
+        ax.set_xlabel('Number of iterations')
+        ylabel = 'Fraction of relative improvement $I$' if relative else 'Objective function value'
+        ax.set_ylabel(ylabel)
 
-    x_ticks = ax.get_xticks()
-    xmin, xmax = ax.get_xlim()
+        x_ticks = ax.get_xticks()
+        xmin, xmax = ax.get_xlim()
 
-    if double_xaxis:
-        iter_rate = result['iterations'] / result['running_time']
-        iter2time = lambda x: x*iter_rate**-1 / 3600
-        time2iter = lambda x: 3600*x*iter_rate
-        ax2 = ax.secondary_xaxis('top', functions=(iter2time, time2iter))
-        ax2.set_xlabel('Running Time (hours)')
+        if double_xaxis:
+            iter_rate = result['iterations'] / result['running_time']
+            iter2time = lambda x: x*iter_rate**-1 / 3600
+            time2iter = lambda x: 3600*x*iter_rate
+            ax2 = ax.secondary_xaxis('top', functions=(iter2time, time2iter))
+            ax2.set_xlabel('Running Time (hours)')
 
-    ax.legend()
-    plt.tight_layout()
-    if save:
-        plt.savefig(save)
+        ax.legend()
+        plt.tight_layout()
+        if save:
+            plt.savefig(save)
+
+except ImportError:
+    pass
