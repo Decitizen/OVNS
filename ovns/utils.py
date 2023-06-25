@@ -1,6 +1,5 @@
 from time import process_time
 from datetime import timedelta as td
-from ovns.initialize import *
 import numpy as np
 from numba import *
 from numba import njit
