@@ -278,7 +278,7 @@ try:
         ax.set_title(title, y=1.15)
 
         if include_initialization:
-            assert type(E_input) is np.ndarray, 'Pass adjacency matrix A as numpy array'
+            assert A is not None, 'Pass adjacency matrix A as numpy array'
             Y0 = compute_random_reference(A, res)
 
         Y, X = zip(*res['run_trace'])
