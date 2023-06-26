@@ -65,7 +65,7 @@ rng = np.random.default_rng()
 A = rng.standard_exponential((N, N))   # Random adjacency matrix carrying the weight information
 k = 20                                 # Size of the targeted subgraph
 
-result = ovns.OVNS(A, k)
+result = ovns.OVNS(k, A)
 
 ```
 
@@ -83,7 +83,32 @@ k = 400
 timetol = 3600                         # Time budget in seconds
 k_step = k // 10                       # Size by which the neighborhood change will be incremented
 
-result = ovns.OVNS(A, k, k_step=k_step, timetol=timetol)
+result = ovns.OVNS(k, A, k_step=k_step, timetol=timetol)
+
+```
+
+Lastly, using networkx graph object as input and plotting convergence (this example requires installation of `networkx` and `matplotlib` packages)
+
+```python
+from ovns import ovns
+import numpy as np
+import networkx as nx
+from ovns.utils import plot_convergence
+
+# Generate undirected unweighted BA graph
+N = 1000
+G = nx.barabasi_albert_graph(N, m=50)
+A = nx.to_numpy_array(G)               # Transform to numpy array format
+
+# Define parameters
+k = 300
+timetol = 500                          # Time budget in seconds
+k_step = k // 10                       # Step size for neighborhood change
+
+result = ovns.OVNS(k, A, k_step=k_step, timetol=timetol)
+
+# Plot convergence for diagnostics
+plot_convergence(result, A)
 
 ```
 
